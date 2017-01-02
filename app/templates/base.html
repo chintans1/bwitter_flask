@@ -1,10 +1,15 @@
 <html>
     <head>
-        <title>Bwitter: {{ user.nickname }}</title>
+        <title>Bwitter</title>
     </head>
 
     <body>
-        <div>Bwitter: <a href="/index">Home</a></div>
+        <div>Bwitter: 
+        <a href="{{ url_for('index') }}">Home</a>
+        {% if g.user.is_authenticated %}
+        | <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+        </div>
         <hr>
         {% with messages = get_flashed_messages() %}
             {% if messages %}

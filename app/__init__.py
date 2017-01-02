@@ -12,6 +12,7 @@ db = SQLAlchemy(app)
 
 lm = LoginManager()
 lm.init_app(app)
-old = OpenID(app, os.path.join(basedir, 'tmp'))
+lm.login_view = 'login'
+oid = OpenID(app, os.path.join(basedir, 'tmp'))
 
 from app import views
