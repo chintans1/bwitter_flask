@@ -1,7 +1,36 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <h1>Welcome to Bwitter, {{ user.nickname }}</h1>
-    {% for bwit in bwits %}
-    <div><p>{{ bwit.user.nickname  }} says: {{ bwit.bwit }}</p></div>
+    <h1>Welcome to Bwitter, {{ g.user.nickname }}</h1>
+    <form action="" method="post" name="bwit">
+        {{ form.hidden_tag() }}
+        <table>
+            <tr>
+                <td>Say something:</td>
+                <td>{{ form.bwit(size=30, maxlength=140) }}</td>
+                <td>
+                {% for error in form.bwit.errors %}
+                <span style="color: red;">[{{ error }}]</span><br>
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Bwit!"></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+    {% for bwit in bwits.items %}
+        {% include 'post.html' %}
     {% endfor %}
+    {% if bwits.has_prev %}
+    <a href="{{ url_for('index', page=bwits.prev_num) }}">&lt;&lt; Newer bwits</a>
+    {% else %}
+    &lt;&lt; Newer bwits
+    {% endif %} |
+    {% if bwits.has_next %}
+    <a href="{{ url_for('index', page=bwits.next_num) }}">Older bwits &gt;&gt;</a>
+    {% else %}Older bwits &gt;&gt;
+    {% endif %} 
 {% endblock %}

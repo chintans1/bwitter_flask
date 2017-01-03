@@ -1,25 +1,25 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
-from .forms import LoginForm, EditForm
-from .models import User
+from .forms import LoginForm, EditForm, BwitForm
+from .models import User, Bwit
 from datetime import datetime
+from config import BWITS_PER_PAGE
 
-@app.route('/')
-@app.route('/index')
-def index():
-    user = g.user
-    bwits = [   # fake list of bwits
-        {
-            'user': {'nickname': 'John'},
-            'bwit': 'Beautiful day in Portland!'
-        },
-        {
-            'user': {'nickname': 'Susan'},
-            'bwit': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', user=user, bwits=bwits)
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+@app.route('/index/<int:page>', methods=['GET', 'POST'])
+@login_required
+def index(page=1):
+    form = BwitForm()
+    if (form.validate_on_submit()):
+        bwit = Bwit(body=form.bwit.data, timestamp=datetime.utcnow(), author=g.user)
+        db.session.add(bwit)
+        db.session.commit()
+        flash('Your bwit is now live!')
+        return redirect(url_for('index'))
+    bwits = g.user.followed_bwits().paginate(1, BWITS_PER_PAGE, False)
+    return render_template('index.html', user=user, bwits=bwits, form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -78,16 +78,14 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/user/<nickname>')
+@app.route('/user/<nickname>/<int:page>')
 @login_required
-def user(nickname):
+def user(nickname, page=1):
     user = User.query.filter_by(nickname=nickname).first()
     if (user == None):
         flash('User %s not found.' % nickname)
         return redirect(url_for('index'))
-    bwits = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
+    bwits = user.bwits.paginate(page, BWITS_PER_PAGE, False)
     return render_template('user.html', user=user, bwits=bwits)
 
 @app.route('/edit', methods=['GET', 'POST'])

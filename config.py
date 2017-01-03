@@ -22,3 +22,6 @@ MAIL_PASSWORD = None
 
 # admin list
 ADMINS = ['chintans98@gmail.com']
+
+BWITS_PER_PAGE = 3
+#WHOOSH_BASE = os.path.join(basedir, 'search.db')

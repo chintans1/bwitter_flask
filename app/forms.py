@@ -26,3 +26,5 @@ class EditForm(Form):
             return False
         return True
         
+class BwitForm(Form):
+    bwit = StringField('bwit', validators=[DataRequired()])

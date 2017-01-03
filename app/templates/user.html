@@ -25,7 +25,18 @@
         </tr>
     </table>
     <hr>
-    {% for bwit in bwits %}
+    {% for bwit in bwits.items %}
         {% include 'post.html' %}
     {% endfor %}
+    {% if bwits.has_prev %}
+    <a href="{{ url_for('user', nickname=user.nickname, page=bwits.prev_num) }}">&lt;&lt; Newer bwits</a>
+    {% else %}
+    &lt;&lt; Newer bwits
+    {% endif %} | 
+
+    {% if bwits.has_next %}
+    <a href="{{ url_for('user', nickname=user.nickname, page=bwits.next_num) }}">Older bwits &gt;&gt;</a>
+    {% else %}
+    Older bwits &gt;&gt;
+    {% endif %}
 {% endblock %}
