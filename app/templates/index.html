@@ -21,7 +21,7 @@
             </tr>
         </table>
     </form>
-    {% for bwit in bwits.items %}
+    {% for bwit in bwits.items|reverse %}
         {% include 'post.html' %}
     {% endfor %}
     {% if bwits.has_prev %}

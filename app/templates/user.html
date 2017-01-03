@@ -10,7 +10,7 @@
                 <p>{{ user.about_me }}</p>
                 {% endif %}
                 {% if user.last_seen %}
-                <p><i>Last seen on: {{ user.last_seen }}</i></p>
+                <p><em>Last seen on: {{ momentjs(user.last_seen).calendar() }}</em></p>
                 {% endif %}
                 <p>{{ user.followers.count() }} followers | 
                 {% if user.id == g.user.id %}
@@ -25,7 +25,7 @@
         </tr>
     </table>
     <hr>
-    {% for bwit in bwits.items %}
+    {% for bwit in bwits.items|reverse %}
         {% include 'post.html' %}
     {% endfor %}
     {% if bwits.has_prev %}
