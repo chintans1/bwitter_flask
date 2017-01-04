@@ -1,7 +1,11 @@
-<table>
-    <tr valign="top">
-        <td><img src="{{ bwit.author.avatar(50) }}"></td>
-        <td><i>{{ bwit.author.nickname }} says:</i><br>
-        {{ bwit.body }}</td>
-    </tr>
-</table>
+<div class="card horizontal">
+    <div class="card-image">
+        <img src="{{ bwit.author.avatar(100) }}">
+    </div>
+    <div class="card-stacked">
+        <div class="card-content">
+            <i><b>{{ bwit.author.nickname }} says:</b></i><br>
+            {{ bwit.body }}
+        </div>
+    </div>
+</div>

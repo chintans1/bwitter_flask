@@ -1,42 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td>
-            <td>
-                <h1>User: {{ user.nickname }}</h1>
-                {% if user.about_me %}
-                <p>{{ user.about_me }}</p>
-                {% endif %}
-                {% if user.last_seen %}
-                <p><em>Last seen on: {{ momentjs(user.last_seen).calendar() }}</em></p>
-                {% endif %}
-                <p>{{ user.followers.count() }} followers | 
-                {% if user.id == g.user.id %}
-                    <a href="{{ url_for('edit') }}">Edit your profile</a>
-                {% elif not g.user.is_following(user) %}
-                    <a href="{{ url_for('follow', nickname=user.nickname) }}">Follow</a>
-                {% else %}
-                    <a href="{{ url_for('unfollow', nickname=user.nickname) }}">Unfollow</a>
-                {% endif %}
-                </p>
-            </td>
-        </tr>
-    </table>
-    <hr>
-    {% for bwit in bwits.items|reverse %}
-        {% include 'post.html' %}
-    {% endfor %}
-    {% if bwits.has_prev %}
-    <a href="{{ url_for('user', nickname=user.nickname, page=bwits.prev_num) }}">&lt;&lt; Newer bwits</a>
-    {% else %}
-    &lt;&lt; Newer bwits
-    {% endif %} | 
+<div class="container">
+    <div class="row">
+        <div class="col s5">
+            <h4 class="header indigo-text">User Profile</h4>
+            <div class="card horizontal">
+                <div class="card-image">
+                    <img src="{{ user.avatar(200) }}">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p style="font-size: 16pt;" class="indigo-text"><b>{{ user.nickname }}</b></p>
+                        {% if user.about_me %}
+                            <p>{{ user.about_me }}</p>
+                        {% endif %}
 
-    {% if bwits.has_next %}
-    <a href="{{ url_for('user', nickname=user.nickname, page=bwits.next_num) }}">Older bwits &gt;&gt;</a>
-    {% else %}
-    Older bwits &gt;&gt;
-    {% endif %}
+                        {% if user.last_seen %}
+                            <p><em>Last seen on: {{ momentjs(user.last_seen).calendar() }}</em></p>
+                        {% endif %}
+                        <p>{{ user.followers.count() }} followers</p>
+                    </div>
+                    <div class="card-action">
+                        {% if user.id == g.user.id %}
+                            <a class="indigo-text" href="{{ url_for('edit') }}">Edit your profile</a>
+                        {% elif not g.user.is_following(user) %}
+                            <a class="indigo-text" href="{{ url_for('follow', nickname=user.nickname) }}">Follow</a>
+                        {% else %}
+                            <a class="indigo-text" href="{{ url_for('unfollow', nickname=user.nickname) }}">Unfollow</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s7">
+            <h4 class="header indigo-text">User Bwits</h4>
+            {% for bwit in bwits.items|reverse %}
+                {% include 'post.html' %}
+            {% endfor %}
+
+            <div class="center">
+                {% if bwits.has_prev %}
+                    <a class="indigo-text" href="{{ url_for('user', nickname=user.nickname, page=bwits.prev_num) }}">&lt;&lt; Newer bwits</a>
+                {% else %}
+                    &lt;&lt; Newer bwits
+                {% endif %} | 
+
+                {% if bwits.has_next %}
+                    <a class="indigo-text" href="{{ url_for('user', nickname=user.nickname, page=bwits.next_num) }}">Older bwits &gt;&gt;</a>
+                {% else %}
+                    Older bwits &gt;&gt;
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

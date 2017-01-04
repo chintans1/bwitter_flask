@@ -25,3 +25,5 @@ ADMINS = ['chintans98@gmail.com']
 
 BWITS_PER_PAGE = 3
 #WHOOSH_BASE = os.path.join(basedir, 'search.db')
+TEMPLATES_AUTO_RELOAD = True
+SQLALCHEMY_TRACK_MODIFICATIONS = True
