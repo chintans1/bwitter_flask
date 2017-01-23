@@ -17,5 +17,5 @@ lm.login_view = 'login'
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
-from app import views
+from app import views, models
 app.jinja_env.globals['momentjs'] = momentjs
