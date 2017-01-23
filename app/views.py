@@ -42,6 +42,15 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+@app.before_request
+def before_request():
+    g.user = current_user
+    if (g.user.is_authenticated):
+        g.user.last_seen = datetime.utcnow()
+        db.session.add(g.user)
+        db.session.commit()
+
+'''
 def after_login(resp):
     if ((resp.email is None) or (resp.email == '')):
         flash('Invalid login. Please try again.')
@@ -62,15 +71,7 @@ def after_login(resp):
         session.pop('remember_me', None)
     login_user(user, remember=remember_me)
     return redirect(request.args.get('next') or url_for('index'))
-
-
-@app.before_request
-def before_request():
-    g.user = current_user
-    if (g.user.is_authenticated):
-        g.user.last_seen = datetime.utcnow()
-        db.session.add(g.user)
-        db.session.commit()
+'''
 
 
 @app.route('/authorize/<provider>')
