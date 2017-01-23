@@ -4,12 +4,10 @@ pip-selfcheck.json
 
 *.pyc
 *.pyo
-app.db
-search.db
 flask
 *.mo
 TODO
-tmp/
-app.db
-db-repository/
-test.db
+tmp/*
+# database files
+*.db
+db_repository/*
