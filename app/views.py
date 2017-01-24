@@ -29,7 +29,7 @@ def index(page=1):
 
 # Users List
 @app.route('/users')
-def users_list():
+def users():
     users = User.query.all()
     return render_template('users.html', users=users)
 

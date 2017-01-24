@@ -37,7 +37,7 @@
                       <a href="{{ url_for('index') }}" class="brand-logo">Bwitter</a>
                       {% if g.user.is_authenticated %}
                           <ul id="nav-mobile" class="right hide-on-med-and-down">
-                            <li><a href="{{ url_for('users') }}">Your Profile</a></li>
+                            <li><a href="{{ url_for('users') }}">Users search</a></li>
                             <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Your Profile</a></li>
                             <li><a href="{{ url_for('logout') }}">Logout</a></li>
                           </ul>
