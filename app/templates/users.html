@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s7">
+        <h4 class="header indigo-text">Users</h4>
+        {% for user in users %}
+            <div class="card horizontal">
+                <div class="card-image">
+                    <img href={{ url_for('user', nickname=user.nickname) }}" src="{{ user.profile_picture }}">
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p href="{{ url_for('user', nickname=user.nickname) }}" style="font-size: 16pt;" class="indigo-text"><b>{{ user.nickname }}</b></p>
+                        {% if user.about_me %}
+                            <p>{{ user.about_me }}</p>
+                        {% endif %}
+
+                        {% if user.last_seen %}
+                            <p><em>Last seen on: {{ momentjs(user.last_seen).calendar() }}</em></p>
+                        {% endif %}
+                        <p>{{ user.followers.count() }} followers</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="card-title indigo-text">Welcome to Bwitter</span>
+                    <div class="row">
+                        <form class="col s12" action="" method="POST" name="bwit">
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+                                <div class="col s12">
+                                    What do you want to say?
+                                    {{ form.bwit(size=30, maxlength=140) }}
+                                </div>
+                            </div>
+                            {% if form.bwit.errors|length > 0 %}
+                                <div class="row">
+                                    <div class="col s12">
+                                        {% for error in form.bwit.errors %}
+                                            <span style="color: red;">{{ error }}</span><br>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <button class="btn waves-effect waves-light indigo" type="submit" name="submit" value="Send">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
