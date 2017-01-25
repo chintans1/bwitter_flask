@@ -6,9 +6,6 @@
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-
         <!-- Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -25,9 +22,20 @@
                 flex: 1 0 auto;
             }
         </style>
+
+        <!-- JS -->
+        <script type="text/javascript">
+            function toasts(message) {
+                Materialize.toast(message, 4000);
+            }
+        </script>
     </head>
 
     <body>
+        <!-- Javascript for Materialize -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
         <!-- Main Content -->
         <main>
             <!-- Navigation bar -->
@@ -52,7 +60,11 @@
                     {% if messages %}
                         <ul>
                         {% for message in messages %}
-                            <li>{{ message }}</li>
+                        <li>
+                        <script type="text/javascript">
+                            toasts("{{ message }}");
+                        </script>
+                        <li>
                         {% endfor %}
                         </ul>
                     {% endif %}
