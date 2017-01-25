@@ -1,4 +1,4 @@
-from flask import session, flash, url_for, redirect
+from flask import flash, url_for, redirect
 from flask import render_template, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
@@ -23,7 +23,7 @@ def index(page=1):
         db.session.commit()
         flash('Your bwit is now live!')
         return redirect(url_for('index'))
-    bwits = g.user.followed_bwits().paginate(1, BWITS_PER_PAGE, False)
+    bwits = g.user.followed_bwits().paginate(page, BWITS_PER_PAGE, False)
     return render_template('index.html', user=user, bwits=bwits, form=form)
 
 
@@ -32,6 +32,7 @@ def index(page=1):
 def users():
     users = User.query.all()
     return render_template('users.html', users=users)
+
 
 # Login Related Functions
 @app.route('/login', methods=['GET', 'POST'])
