@@ -83,6 +83,8 @@ def oauth_callback(provider):
                     profile_picture=profile_picture)
         db.session.add(user)
         db.session.commit()
+        db.session.add(user.follow(user))
+        db.session.commit()
     login_user(user, True)
     return redirect(url_for('index'))
 
@@ -167,6 +169,12 @@ def unfollow(nickname):
     db.session.commit()
     flash('You have stopped following ' + nickname + '.')
     return redirect(url_for('user', nickname=nickname))
+
+
+# Bwit Actions (Delete)
+def delete_bwit(id):
+    pass
+
 
 # Errors
 @app.errorhandler(404)

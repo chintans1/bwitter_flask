@@ -51,9 +51,6 @@ class User(db.Model):
         except NameError:
             return str(self.id)
 
-    def avatar(self, size):
-        return('http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size))
-
     def first_name(self, nickname):
         # split at space in name
         name = nickname.split(' ')
@@ -74,8 +71,11 @@ class User(db.Model):
             followers.c.followed_id == user.id).count() > 0)
 
     def followed_bwits(self):
-        return Bwit.query.join(followers, (
-            followers.c.followed_id == Bwit.user_id)).filter(followers.c.follower_id == self.id).order_by(Bwit.timestamp.desc())
+        followed_bwits = Bwit.query.join(followers, (
+            followers.c.followed_id == Bwit.user_id)).filter(
+                followers.c.follower_id == self.id).order_by(
+                    Bwit.timestamp.desc())
+        return followed_bwits
 
     def __repr__(self):
         return '<User %r>' % (self._username)
