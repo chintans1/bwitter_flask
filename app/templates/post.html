@@ -4,7 +4,7 @@
     </div>
     <div class="card-stacked">
         <div class="card-content">
-            <i><b>{{ bwit.author.nickname }} says:</b></i><br>
+            <i><b><a style="color: black;" href="{{ url_for('user', nickname=bwit.author.nickname) }}">{{ bwit.author.nickname }}</a> says:</b></i><br>
             {{ bwit.body }}
         </div>
     </div>
