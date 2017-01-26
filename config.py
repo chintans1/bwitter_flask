@@ -15,10 +15,11 @@ BWITS_PER_PAGE = 3
 TEMPLATES_AUTO_RELOAD = True
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
+FB_KEY = os.environ.get('FB_SECRET_KEY')
 # Auth
 OAUTH_CREDENTIALS = {
     'facebook': {
         'id': '240571076396508',
-        'secret': '14d71ee085d3e78a3615f1125bc22af8'
+        'secret': FB_KEY
     }
 }
