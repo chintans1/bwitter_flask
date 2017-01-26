@@ -172,8 +172,19 @@ def unfollow(nickname):
 
 
 # Bwit Actions (Delete)
+@app.route('/delete-bwit/<id>')
 def delete_bwit(id):
-    pass
+    bwit = Bwit.query.get(id)
+    if (bwit is None):
+        flash('Bwit is not found')
+        return redirect(url_for('index'))
+    if (bwit.author.id != g.user.id):
+        flash('You can not delete other bwits')
+        return redirect(url_for('index'))
+    db.session.delete(bwit)
+    db.session.commit()
+    flash('Your bwit has been deleted.')
+    return redirect(url_for('index'))
 
 
 # Errors

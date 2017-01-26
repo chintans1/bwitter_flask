@@ -4,8 +4,13 @@
     </div>
     <div class="card-stacked">
         <div class="card-content">
-            <i><b><a style="color: black;" href="{{ url_for('user', nickname=bwit.author.nickname) }}">{{ bwit.author.nickname }}</a> says:</b></i><br>
+            <a style="color: black; font-style: regular;" href="{{ url_for('user', nickname=bwit.author.nickname) }}"><b>{{ bwit.author.nickname }}</b></a> says:<br>
             {{ bwit.body }}
         </div>
+        {% if bwit.author.id == g.user.id %}
+        <div class="card-action">
+            <a style="color: black;" href="{{ url_for('delete_bwit', id=bwit.id) }}">Delete Bwit</a>
+        </div>
+        {% endif %}
     </div>
 </div>
