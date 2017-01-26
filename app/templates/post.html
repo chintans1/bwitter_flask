@@ -4,7 +4,7 @@
     </div>
     <div class="card-stacked">
         <div class="card-content">
-            <a style="color: black; font-style: regular;" href="{{ url_for('user', nickname=bwit.author.nickname) }}"><b>{{ bwit.author.nickname }}</b></a> says:<br>
+            <a style="color: black;" href="{{ url_for('user', nickname=bwit.author.nickname) }}"><b>{{ bwit.author.nickname }}</b></a> says:<br>
             {{ bwit.body }}
         </div>
         {% if bwit.author.id == g.user.id %}
